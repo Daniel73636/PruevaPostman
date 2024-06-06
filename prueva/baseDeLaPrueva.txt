@@ -1,0 +1,45 @@
+CREATE TABLE students (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    Names Varchar(125) NOT NULL,
+    BirthDate Datetime NOT NULL,
+    Address Varchar(125) NOT NULL,
+    Email Varchar(125) UNIQUE NOT NULL
+);
+
+
+CREATE TABLE teachers (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    Names Varchar(125) NOT NULL,
+    Specialty Varchar(125) NOT NULL,
+    Phone Varchar(25) NOT NULL,
+    Email Varchar(125) UNIQUE NOT NULL,
+    YearsExperience int NOT NULL
+); 
+
+CREATE TABLE enrollments (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    Date Datetime NOT NULL,
+    StudentId int(10) NOT NULL,
+    CourseId int(10) NOT NULL,
+    Status ENUM('activo', 'inactivo') DEFAULT 'activo'
+);
+
+CREATE TABLE courses (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    Name Varchar(125) NOT NULL,
+    Description text NOT null,
+    TeacherId int NOT NULL,
+   	Chedule Varchar(125) NOT null,
+    Duration Varchar NOT null,
+    Capacity int NOT null
+);
+
+
+ALTER TABLE enrollments
+ADD CONSTRAINT fk_StudentId_student FOREIGN KEY (StudentId) REFERENCES students(Id);
+
+ALTER TABLE enrollments
+ADD CONSTRAINT fk_CourseId_courses FOREIGN KEY (CourseId) REFERENCES courses(Id);
+
+ALTER TABLE courses
+ADD CONSTRAINT fk_TeacherId_courses FOREIGN KEY (TeacherId) REFERENCES teachers(Id);
